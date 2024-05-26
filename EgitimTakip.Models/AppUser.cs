@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace EgitimTakip.Models
 {
-    public class AppUser : BaseModel
+    public class AppUser : BaseModel 
     {
         public string UserName { get; set; }
         public string Password { get; set; }
+        public bool IsAdmin { get; set; } = true;
         public virtual ICollection<Company> Companies { get; set; } = new List<Company>();
     }
 }
+    
