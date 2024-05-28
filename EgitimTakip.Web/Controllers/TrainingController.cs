@@ -1,6 +1,7 @@
 ﻿using EgitimTakip.Data;
 using EgitimTakip.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EgitimTakip.Web.Controllers
 {
@@ -15,9 +16,9 @@ namespace EgitimTakip.Web.Controllers
         {
             return View();
         }
-        public IActionResult GetAll(int companyId) 
+        public IActionResult GetAll() 
         {
-            return Json(new {data= _context.Trainings.Where(t => t.CompanyId == companyId && !t.IsDeleted) });
+            return Json(new {data= _context.Trainings.Include(t=>t.Company).Include(t=>t.Employees).Where(t=>!t.IsDeleted).ToList()});
         }
 
         [HttpPost]
@@ -31,14 +32,16 @@ namespace EgitimTakip.Web.Controllers
                 _context.TrainingsSubjectsMaps.Add(item);
             }
             _context.SaveChanges();
-            return Ok(training);
+            var returndata = _context.Trainings.Where(h => h.Id == training.Id).Include(t => t.Company);
+            return Ok(returndata);
         }
         [HttpPost]
         public IActionResult Update(Training training)
         {
             _context.Trainings.Update(training);
             _context.SaveChanges();
-            return Ok(training);
+            var returndata = _context.Trainings.Where(h => h.Id == training.Id).Include(t => t.Company);
+            return Ok(new {data=returndata});
         }
         [HttpPost]
         public IActionResult Delete(int id)
