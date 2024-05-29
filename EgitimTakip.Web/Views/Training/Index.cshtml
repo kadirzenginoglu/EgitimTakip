@@ -1,7 +1,4 @@
-﻿@model Training
-
-
-<div class="modal fade" id="modalEkle" tabindex="-1" data-bs-backdrop="static"
+﻿<div class="modal fade" id="modalEkle" tabindex="-1" data-bs-backdrop="static"
      data-bs-keyboard="false"
      role="dialog"
      aria-labelledby="modalTitleId"
@@ -85,7 +82,7 @@
                         },
                         {
                             data: "company", title: "Firma", render: function (data) {
-                                return data.lenght === 0 ? `Çalıştığı Firma Bulunamadı` : `${data.name}`
+                                return data === null ? `Çalıştığı Firma Bulunamadı` : `${data.name}`
                             }
                         },
                         {

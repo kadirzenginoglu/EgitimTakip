@@ -1,6 +1,7 @@
 ﻿using EgitimTakip.Data;
 using EgitimTakip.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EgitimTakip.Web.Controllers
 {
@@ -16,14 +17,14 @@ namespace EgitimTakip.Web.Controllers
             return View();
         }
 
-        public IActionResult GetAll (int companyId)
+        public IActionResult GetAll ()
         {
-            var result = _context.Employees.Where(e=>e.CompanyId == companyId && !e.IsDeleted).ToList();
+            var result = _context.Employees.Where(e=>!e.IsDeleted).Include(e=>e.Company).ToList();
             return Json(new { data = result });
         }
 
         public IActionResult Add(Employee employee)
-        {
+            {
             _context.Employees.Add(employee);
             _context.SaveChanges();
             return Ok(employee);

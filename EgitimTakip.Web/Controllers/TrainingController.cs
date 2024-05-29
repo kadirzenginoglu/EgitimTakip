@@ -26,13 +26,13 @@ namespace EgitimTakip.Web.Controllers
         {
             _context.Trainings.Add(training);
             _context.SaveChanges();
-            
-            foreach(var item in trainingSubjectsMaps)
+
+            foreach (var item in trainingSubjectsMaps)
             {
                 _context.TrainingsSubjectsMaps.Add(item);
             }
             _context.SaveChanges();
-            var returndata = _context.Trainings.Where(h => h.Id == training.Id).Include(t => t.Company);
+            var returndata = _context.Trainings.Where(h => h.Id == training.Id).Include(t => t.Company).Include(t => t.Employees).FirstOrDefault();
             return Ok(returndata);
         }
         [HttpPost]
@@ -40,8 +40,8 @@ namespace EgitimTakip.Web.Controllers
         {
             _context.Trainings.Update(training);
             _context.SaveChanges();
-            var returndata = _context.Trainings.Where(h => h.Id == training.Id).Include(t => t.Company);
-            return Ok(new {data=returndata});
+            var returndata = _context.Trainings.Where(h => h.Id == training.Id).Include(t => t.Company).Include(t => t.Employees).FirstOrDefault();
+            return Ok(returndata);
         }
         [HttpPost]
         public IActionResult Delete(int id)

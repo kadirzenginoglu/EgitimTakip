@@ -1,0 +1,194 @@
+﻿<div class="modal fade" id="modalEkle" tabindex="-1" data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     role="dialog"
+     aria-labelledby="modalTitleId"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+         role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">
+                    Yeni Personel Ekle
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="mb-3 row">
+                    <select id="ddlCompany" class="form-control" placeholder="Lütfen çalışanın adını giriniz"> </select>
+                </div>
+
+                <div class="mb-3 row">
+                    <input type="text" id="txtfullName" class="form-control" placeholder="Lütfen Ad Soyad giriniz" />
+                </div>
+                <div class="mb-3 row">
+                    <input type="text" id="txttck" class="form-control" placeholder="Lütfen TCKN giriniz" />
+                </div>
+
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Kapat </button>
+                <a id="btnSave" class="btn btn-primary"> Kaydet </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-header d-flex"><div class="col-11 text-center bg-warning">BAŞLIK</div><div class="col-1"><button class="btn btn-success" id="btnAdd"> EKLE </button></div></div>
+    <div class="card-body">
+        <table class="table table-striped table-sm table-success" id="tblEmployee"> </table>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+
+        var dataTable;
+        $(document).ready(function () {
+            dataTable()
+            ddlCompany()
+            $("#btnAdd").click(function () {
+                $("#modalEkle").modal("show")
+                $("#btnSave").click(add)
+
+            })
+        })
+
+        function dataTable() {
+            dataTable = $("#tblEmployee").DataTable({
+                ajax: "/Employee/GetAll",
+                columns:
+                [
+                        {
+                            data:"id", title:"id"
+                        },
+                        {
+                            data:"fullName", title:"İsim"
+                        },
+                        {
+                            data:"tck", title:"TC"
+                        },
+                        {
+                            data: "company", title: "Firma", render: function (data) {
+                                return data === null ? `Çalıştığı Firma Bulunamadı` : `${data.name}`
+                            }
+                        },
+                        {
+                            data: "trainings", title: "Eğitimler", render: function (data) {
+                                return data.length === 0 ? `Eğitimi yok` : `${data.name}`
+                            } 
+                        },
+                        {
+                            data: "id", title: "İşlemler", render: function (data) {
+                                return `<button class="btn btn-danger" onclick="Delete(${data}, this)">SİL</button>
+                                <button class="btn btn-warning" onclick="Update(${data},this)">Güncelle</button>`
+                            }
+                        }
+
+                ]
+            })
+        }
+
+        function ddlCompany() {
+            $.ajax({
+                url: "/Company/GetAll",
+                type:"GET",
+                success: function (res) {
+                    for (var title of res.data) {
+                        $("#ddlCompany").append(new Option(title.name, title.id))
+                    }
+                }
+            })
+        }
+
+
+        function add() {
+            $.ajax({
+                url:"/Employee/Add",
+                type:"GET",
+                data: {
+                    fullName:$("#txtfullName").val(),
+                    tck : $("#txttck").val(),
+                    companyId: $("#ddlCompany").val()
+                },
+                success: function (res) {
+                    dataTable.row.add(res).draw()
+                    alert("Ekleme Başarılı....")
+                    $("#modalEkle").modal("hide")
+                }
+
+            })
+        }
+
+        function Delete(id, element) {
+            let row = $(element).parents("tr")
+            $.ajax({
+                url:"/Employee/Delete",
+                type: "POST",
+                data: {
+                    id:id,
+                },
+                success: function (res) {
+                    dataTable.row(row).remove().draw()
+                    alert("Silme Başarılı...")
+                }
+            })
+        }
+
+
+        function Update(id, element) {
+            let row= $(element).parents("tr")
+            let oldData = dataTable.row(row).data()
+            console.log(row)
+            $("#modalEkle").modal("show")
+            $("#txtfullName").val(oldData.fullName)
+            $("#txttck").val(oldData.tck)
+            $("#txtcompanyName").val(oldData.companyName)
+            $("#btnSave").off().removeClass("success").addClass("warning").text("Güncelle").click(function () {
+                $.ajax({
+                    url:"/Employee/Update",
+                    type:"POST",
+                    data: {
+                        id:id,
+                        fullName: $("#txtfullName").val(),
+                        tck: $("#txttck").val(),
+                        companyId: $("#ddlCompany").val()
+                    },
+                    success: function (res) {
+                        dataTable.row(row).data(res).draw()
+                        alert("Güncelleme Başarılı...")
+                        $("#modalEkle").modal("hide")
+                    }
+
+
+
+
+                })
+            })
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+}
