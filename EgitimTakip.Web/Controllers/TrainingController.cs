@@ -1,10 +1,12 @@
 ﻿using EgitimTakip.Data;
 using EgitimTakip.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EgitimTakip.Web.Controllers
 {
+    [Authorize]
     public class TrainingController : Controller
     {
         private readonly ApplicationDbContext _context;
