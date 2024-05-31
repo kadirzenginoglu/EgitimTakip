@@ -60,10 +60,13 @@
             ddlCompany()
 
             $("#btnAdd").click(function () {
+                $("#modalEkle input").val("")
                 $("#modalEkle").modal("show")
-                $("#btnSave").click(add)
+                $("#btnSave").off().removeClass("btn-warning").addClass("btn-primary").text("Kaydet").click(add)
 
             })
+
+           
         })
         //Burda bitiyor.
 

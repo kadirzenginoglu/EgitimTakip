@@ -65,8 +65,5 @@ namespace EgitimTakip.Web.Controllers
             return Ok(company);
         }
 
-
-
-
     }
 }

@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace EgitimTakip.Web.Controllers
 {
     [Authorize]
-    public class TrainingSubjectsContollers : Controller
+    public class TrainingSubjectsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public TrainingSubjectsContollers(ApplicationDbContext context)
+        public TrainingSubjectsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -19,7 +19,7 @@ namespace EgitimTakip.Web.Controllers
         }
         public IActionResult GetAll()
         {
-            var result = _context.TrainingSubjects.ToList();
+            var result = _context.TrainingSubjects.Where(o=>!o.IsDeleted).ToList();
             return Json(new { data= result });
         }
         [HttpPost]
