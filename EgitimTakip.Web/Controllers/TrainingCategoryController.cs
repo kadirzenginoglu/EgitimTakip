@@ -1,0 +1,32 @@
+﻿using EgitimTakip.Data;
+using EgitimTakip.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace EgitimTakip.Web.Controllers
+{
+    public class TrainingCategoryController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+
+        public TrainingCategoryController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+        public IActionResult GettAll()
+        {
+            return Json(new { data = _context.TrainingCategories.Where(tc => !tc.IsDeleted).ToList() });
+        }
+        [HttpPost]
+        public IActionResult Add(TrainingCategory trainingCategory)
+        {
+            _context.TrainingCategories.Add(trainingCategory);
+            _context.SaveChanges();
+            return Ok(trainingCategory);
+        }
+    }
+}
