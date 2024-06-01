@@ -24,9 +24,22 @@ namespace EgitimTakip.Web.Controllers
         [HttpPost]
         public IActionResult Add(TrainingCategory trainingCategory)
         {
-            _context.TrainingCategories.Add(trainingCategory);
-            _context.SaveChanges();
-            return Ok(trainingCategory);
+            try
+            {
+                _context.TrainingCategories.Add(trainingCategory);
+                _context.SaveChanges();
+                return Ok(trainingCategory);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+                //500 - Internal Server Error
+            }
         }
+
+        
+
+
+
     }
 }
