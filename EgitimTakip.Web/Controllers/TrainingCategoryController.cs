@@ -44,15 +44,25 @@ namespace EgitimTakip.Web.Controllers
             var trainigCategory = _context.TrainingCategories.FirstOrDefault(tc=> tc.Id == id);
 
             trainigCategory.IsDeleted =true;
-            _context.TrainingCategories.Update(trainigCategory);
+            _context.TrainingCategories.Update(trainingCategory);
             _context.SaveChanges();
             return Ok();
 
         }
 
-       
+        [HttpPost]
+        public IActionResult Update(TrainingCategory trainingCategory)
+        {
+            
+            _context.TrainingCategories.Update(trainingCategory);
+            _context.SaveChanges();
+            return Ok();
 
-        
+        }
+
+
+
+
 
 
     }
