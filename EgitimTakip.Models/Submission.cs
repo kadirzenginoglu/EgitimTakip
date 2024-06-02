@@ -19,6 +19,9 @@ namespace EgitimTakip.Models
         public string? Message { get; set; }
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
+        public virtual AppUser User { get; set; }
+        public int CompanyId { get; set; }
+        public virtual Company Company { get; set; }
 
 
     }
