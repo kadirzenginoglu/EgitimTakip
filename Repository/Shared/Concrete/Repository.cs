@@ -48,17 +48,17 @@ namespace EgitimTakip.Repository.Shared.Concrete
 
         public ICollection<T> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbSet.Where(x=> x.IsDeleted).ToList();
         }
 
         public T GetById(int id)
         {
-            throw new NotImplementedException();
+            return _dbSet.Find(id);
         }
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dbSet.FirstOrDefault(predicate);
         }
 
         public void Save()
