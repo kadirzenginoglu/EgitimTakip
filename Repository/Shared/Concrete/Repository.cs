@@ -68,7 +68,9 @@ namespace EgitimTakip.Repository.Shared.Concrete
 
         public T Update(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Update(entity);
+            Save();
+            return entity;
         }
 
         T IRepository<T>.Delete(int id)
