@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EgitimTakip.Models", "Egiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EgitimTakip.Data", "EgitimTakip.Data\EgitimTakip.Data.csproj", "{173A4913-474E-4594-A4B5-CD004992F492}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{D6DFE20A-CA38-47BF-9D7D-7BC41BBE55ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EgitimTakip.Repository", "Repository\EgitimTakip.Repository.csproj", "{D6DFE20A-CA38-47BF-9D7D-7BC41BBE55ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
