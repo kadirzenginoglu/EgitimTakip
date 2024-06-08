@@ -11,7 +11,7 @@ namespace EgitimTakip.Repository.Shared.Abstract
     {
         ICollection<T> GetAll();
         T Add(T entity);
-        List<T> AddRange();
+        List<T> AddRange(List<T> entities);
         T Update(T entity);
         T Delete(int id);
         T GetById(int id);
