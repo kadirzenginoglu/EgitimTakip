@@ -1,5 +1,6 @@
 ﻿using EgitimTakip.Data;
 using EgitimTakip.Models;
+using EgitimTakip.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,11 +10,13 @@ namespace EgitimTakip.Web.Controllers
     [Authorize]
     public class EmployeeController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public EmployeeController(ApplicationDbContext context)
+        private readonly IRepository<Employee> _repo;
+
+        public EmployeeController(IRepository<Employee> repo)
         {
-            _context = context;
+            _repo = repo;
         }
+
         public IActionResult Index()
         {
             return View();

@@ -13,7 +13,7 @@ namespace EgitimTakip.Repository.Shared.Abstract
         T Add(T entity);
         List<T> AddRange(List<T> entities);
         T Update(T entity);
-        T Delete(int id);
+        void Delete(int id);
         T GetById(int id);
         
         T GetFirstOrDefault(Expression<Func<T,bool>> predicate);

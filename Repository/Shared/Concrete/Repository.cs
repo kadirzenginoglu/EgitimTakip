@@ -73,9 +73,6 @@ namespace EgitimTakip.Repository.Shared.Concrete
             return entity;
         }
 
-        T IRepository<T>.Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
