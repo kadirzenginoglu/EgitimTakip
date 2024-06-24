@@ -28,7 +28,7 @@ namespace EgitimTakip.Repository.Shared.Concrete
             _dbSet.Add(entity);
             Save();
             return entity;
-        }
+        } 
 
           public List<T> AddRange(List<T> entities)
         {
